@@ -1,0 +1,52 @@
+{
+  "name": "todo",
+  "description": "todo",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^16.11.6",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "chai": "^4.3.6",
+    "eslint": "^8.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.5",
+    "mocha": "^9.2.0",
+    "pinst": "^2.1.6",
+    "prettier": "^2.4.1",
+    "ts-node": "^10.4.0",
+    "typescript": "~4.4.4"
+  },
+  "files": [
+    "/dist/**/*.d.ts",
+    "/dist/**/*.d.ts.map",
+    "/dist/**/*.js",
+    "/dist/**/*.js.map"
+  ],
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "yarn build:cjs && yarn build:esm && yarn build:types",
+    "build:cjs": "tsc --build cjs.tsconfig.json",
+    "build:esm": "tsc --build esm.tsconfig.json",
+    "build:types": "tsc --build types.tsconfig.json",
+    "clean": "rm -rf ./dist",
+    "lint": "yarn lint:ts && yarn prettier:check && yarn:typecheck",
+    "lint:ts": "eslint --config ./.eslintrc.yaml --ignore-path ./.eslintignore --ext .js,.ts .",
+    "postinstall": "husky install",
+    "postpublish": "pinst --enable",
+    "prepublishOnly": "pinst --disable",
+    "prettier": "prettier --config ./.prettierrc.yaml --ignore-path ./.prettierignore --write \"**/*.{js,json,md,ts,yaml,yml}\"",
+    "prettier:check": "prettier --check --config ./.prettierrc.yaml --ignore-path ./.prettierignore \"**/*.{js,json,md,ts,yaml,yml}\"",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "types": "./dist/index.d.ts"
+}
